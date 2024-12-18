@@ -18,34 +18,29 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             let validPlaceSelected = false;
-            let validationInProgress = false; // To prevent repeated blur handling
 
             // Event listener for when a place is selected
             autocomplete.addListener('place_changed', function () {
                 var selectedPlace = autocomplete.getPlace();
                 if (selectedPlace.geometry) {
+                    validPlaceSelected = true;
                     console.log('Selected Place:', selectedPlace.name);
                     console.log('Formatted Address:', selectedPlace.formatted_address);
                     console.log('Latitude:', selectedPlace.geometry.location.lat());
                     console.log('Longitude:', selectedPlace.geometry.location.lng());
-                    validPlaceSelected = true;
                 }
             });
 
             // Validate input when the user attempts to leave the input field
             inputElement.addEventListener('blur', function () {
-                if (!validPlaceSelected && !validationInProgress) {
-                    validationInProgress = true; // Set flag to prevent repeated handling
-
-                    alert('Please select a valid address from the dropdown list.');
-                    inputElement.value = ''; // Clear the input field
-
-                    // Delay the focus to prevent immediate blur triggering
-                    setTimeout(() => {
-                        inputElement.focus();
-                        validationInProgress = false; // Reset the flag after focusing
-                    }, 0);
-                }
+                // Add a delay to allow 'place_changed' to fire
+                setTimeout(() => {
+                    if (!validPlaceSelected) {
+                        alert('Please select a valid address from the dropdown list.');
+                        inputElement.value = ''; // Clear the input field
+                        inputElement.focus();     // Bring focus back to the input field
+                    }
+                }, 200); // Delay of 200 milliseconds
             });
 
             // Reset the flag if the user modifies the input manually
