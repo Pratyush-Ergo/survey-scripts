@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 strictBounds: true
             });
 
-            // Flag to track if a valid place was selected
             let validPlaceSelected = false;
+            let validationInProgress = false; // To prevent repeated blur handling
 
             // Event listener for when a place is selected
             autocomplete.addListener('place_changed', function () {
@@ -32,12 +32,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            // Validate input when the user attempts to submit the form or leave the input field
+            // Validate input when the user attempts to leave the input field
             inputElement.addEventListener('blur', function () {
-                if (!validPlaceSelected) {
+                if (!validPlaceSelected && !validationInProgress) {
+                    validationInProgress = true; // Set flag to prevent repeated handling
+
                     alert('Please select a valid address from the dropdown list.');
                     inputElement.value = ''; // Clear the input field
-                    inputElement.focus(); // Bring the focus back to the input
+
+                    // Delay the focus to prevent immediate blur triggering
+                    setTimeout(() => {
+                        inputElement.focus();
+                        validationInProgress = false; // Reset the flag after focusing
+                    }, 0);
                 }
             });
 
