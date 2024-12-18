@@ -13,9 +13,10 @@ document.addEventListener('DOMContentLoaded', function () {
         script.defer = true;
 
         script.onload = function () {
-            // Initialize Google Places Autocomplete on the existing input field
+            // Initialize the autocomplete with restriction to Australia
             var autocomplete = new google.maps.places.Autocomplete(inputElement, {
-                types: ['geocode'] // Customize as needed
+                types: ['geocode'], // Limit to addresses
+                componentRestrictions: { country: 'AU' } // Restrict to Australia
             });
 
             // Handle place selection
