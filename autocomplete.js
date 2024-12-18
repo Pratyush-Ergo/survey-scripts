@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Select the first Forsta text input field (e.g., q1)
+    // Wait until all survey elements are loaded
     var inputElement = document.querySelector('input[type="text"]');
 
     if (inputElement) {
-        // Ensure the input field has a unique ID for clarity
+        // Assign a unique ID to the existing input field for clarity
         inputElement.id = 'autocomplete-input';
 
         // Load Google Maps Places API
@@ -11,11 +11,11 @@ document.addEventListener('DOMContentLoaded', function () {
         script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBJzSqGu47VuspJ5GjB1UpYyQRzuzDSSxQ&libraries=places';
         script.async = true;
         script.defer = true;
-        
+
         script.onload = function () {
-            // Initialize the autocomplete on the selected input field
+            // Initialize Google Places Autocomplete on the existing input field
             var autocomplete = new google.maps.places.Autocomplete(inputElement, {
-                types: ['geocode'] // Customize this as needed
+                types: ['geocode'] // Customize as needed
             });
 
             // Handle place selection
@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         };
 
-        // Append the script to the document body
         document.body.appendChild(script);
     } else {
         console.error('Input element not found.');
