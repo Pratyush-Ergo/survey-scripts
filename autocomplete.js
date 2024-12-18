@@ -1,9 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Wait until all survey elements are loaded
     var inputElement = document.querySelector('input[type="text"]');
 
     if (inputElement) {
-        // Assign a unique ID to the existing input field for clarity
         inputElement.id = 'autocomplete-input';
 
         // Load Google Maps Places API
@@ -13,13 +11,16 @@ document.addEventListener('DOMContentLoaded', function () {
         script.defer = true;
 
         script.onload = function () {
-            // Initialize the autocomplete with restriction to Australia
-           var autocomplete = new google.maps.places.Autocomplete(inputElement, {
-    types: ['geocode'],
-    componentRestrictions: { country: 'AU' } // Restrict to Australia
-});
+            var autocomplete = new google.maps.places.Autocomplete(inputElement, {
+                types: ['geocode'],
+                componentRestrictions: { country: 'AU' },
+                strictBounds: true
+            });
 
-            // Handle place selection
+            // Flag to track if a valid place was selected
+            let validPlaceSelected = false;
+
+            // Event listener for when a place is selected
             autocomplete.addListener('place_changed', function () {
                 var selectedPlace = autocomplete.getPlace();
                 if (selectedPlace.geometry) {
@@ -27,11 +28,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.log('Formatted Address:', selectedPlace.formatted_address);
                     console.log('Latitude:', selectedPlace.geometry.location.lat());
                     console.log('Longitude:', selectedPlace.geometry.location.lng());
+                    validPlaceSelected = true;
                 }
+            });
+
+            // Validate input when the user attempts to submit the form or leave the input field
+            inputElement.addEventListener('blur', function () {
+                if (!validPlaceSelected) {
+                    alert('Please select a valid address from the dropdown list.');
+                    inputElement.value = ''; // Clear the input field
+                    inputElement.focus(); // Bring the focus back to the input
+                }
+            });
+
+            // Reset the flag if the user modifies the input manually
+            inputElement.addEventListener('input', function () {
+                validPlaceSelected = false;
             });
         };
 
-        document.body.appendChild(script);
+        if (!document.querySelector('script[src*="maps.googleapis.com"]')) {
+            document.body.appendChild(script);
+        }
     } else {
         console.error('Input element not found.');
     }
