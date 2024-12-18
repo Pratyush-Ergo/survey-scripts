@@ -14,10 +14,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         script.onload = function () {
             // Initialize the autocomplete with restriction to Australia
-            var autocomplete = new google.maps.places.Autocomplete(inputElement, {
-                types: ['geocode'], // Limit to addresses
-                componentRestrictions: { country: 'AU' } // Restrict to Australia
-            });
+           var autocomplete = new google.maps.places.Autocomplete(inputElement, {
+    types: ['geocode'],
+    componentRestrictions: { country: 'AU' } // Restrict to Australia
+});
 
             // Handle place selection
             autocomplete.addListener('place_changed', function () {
