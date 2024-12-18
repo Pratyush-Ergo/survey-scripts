@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     var inputElement = document.querySelector('input[type="text"]');
+    let lastValidPlace = null;
 
     if (inputElement) {
         inputElement.id = 'autocomplete-input';
@@ -17,40 +18,31 @@ document.addEventListener('DOMContentLoaded', function () {
                 strictBounds: true
             });
 
-            let validPlaceSelected = false;
-
             // Event listener for when a place is selected
             autocomplete.addListener('place_changed', function () {
                 var selectedPlace = autocomplete.getPlace();
                 if (selectedPlace.geometry) {
-                    validPlaceSelected = true;
-                    console.log('Selected Place:', selectedPlace.name);
-                    console.log('Formatted Address:', selectedPlace.formatted_address);
-                    console.log('Latitude:', selectedPlace.geometry.location.lat());
-                    console.log('Longitude:', selectedPlace.geometry.location.lng());
+                    lastValidPlace = selectedPlace;
+                    console.log('Selected Place:', selectedPlace.formatted_address);
                 }
             });
 
-            // Validate input when the user attempts to leave the input field
-            inputElement.addEventListener('blur', function () {
-                // Add a delay to allow 'place_changed' to fire
-                setTimeout(() => {
-                    if (!validPlaceSelected) {
-                        alert('Please select a valid address from the dropdown list.');
-                        inputElement.value = ''; // Clear the input field
-                        inputElement.focus();     // Bring focus back to the input field
-                    }
-                }, 200); // Delay of 200 milliseconds
-            });
-
-            // Reset the flag if the user modifies the input manually
-            inputElement.addEventListener('input', function () {
-                validPlaceSelected = false;
+            // Validate when the user submits the form or presses Enter
+            inputElement.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Prevent default form submission
+                    validateInput();
+                }
             });
         };
 
-        if (!document.querySelector('script[src*="maps.googleapis.com"]')) {
-            document.body.appendChild(script);
+        // Function to validate the input
+        function validateInput() {
+            if (!lastValidPlace) {
+                alert('Please select a valid address from the dropdown list.');
+                inputElement.value = ''; // Clear the input field
+                inputElement.focus();
+            }
         }
     } else {
         console.error('Input element not found.');
