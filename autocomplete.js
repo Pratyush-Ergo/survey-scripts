@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (inputElement) {
         inputElement.id = 'autocomplete-input';
-
         // Load Google Maps Places API
         var script = document.createElement('script');
         script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBJzSqGu47VuspJ5GjB1UpYyQRzuzDSSxQ&libraries=places';
