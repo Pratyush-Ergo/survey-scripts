@@ -1,13 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
     setTimeout(function () { // Add a delay to ensure elements are fully loaded
-        // Select the input by its id or name
         var inputElement = document.querySelector('input[name="ans160.0.0"], input[id="ans160.0.0"]');
 
         if (inputElement) {
             console.log('Found input element:', inputElement);
-            inputElement.id = 'autocomplete-input'; // Assign a consistent ID for autocomplete
-            
-            // Load the Google Places API
+            inputElement.id = 'autocomplete-input'; // Assign a consistent ID
+
+            // Load Google Maps API
             var script = document.createElement('script');
             script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBJzSqGu47VuspJ5GjB1UpYyQRzuzDSSxQ&libraries=places';
             script.async = true;
@@ -37,5 +36,5 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             console.error('Input element for QF5A not found.');
         }
-    }, 1000); // Add a 1-second delay to ensure dynamic content loads
+    }, 2000); // Add delay to ensure all elements are loaded
 });
