@@ -37,5 +37,5 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             console.error('Input element for QF5A_r1 not found.');
         }
-    }, 1000); // 1-second delay to handle dynamic rendering
+    }, 500); // .5-second delay to handle dynamic rendering
 });
