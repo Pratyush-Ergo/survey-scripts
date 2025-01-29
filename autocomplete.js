@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var inputElement = document.querySelector('input[type="text"]');
+    var questionName = 'QF5A'; // The label in the XML
+    var inputElement = document.querySelector(`input[name="${questionName}"], input[id="${questionName}"]`);
 
     if (inputElement) {
         inputElement.id = 'autocomplete-input';
 
         var script = document.createElement('script');
-        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBJzSqGu47VuspJ5GjB1UpYyQRzuzDSSxQ&libraries=places';
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places';
         script.async = true;
         script.defer = true;
 
@@ -31,6 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.appendChild(script);
         }
     } else {
-        console.error('Input element not found.');
+        console.error(`Input element for "${questionName}" not found.`);
     }
 });
