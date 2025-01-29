@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
             
             // Load the Google Places API
             var script = document.createElement('script');
-            script.src = 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places';
+            script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBJzSqGu47VuspJ5GjB1UpYyQRzuzDSSxQ&libraries=places';
             script.async = true;
             script.defer = true;
 
