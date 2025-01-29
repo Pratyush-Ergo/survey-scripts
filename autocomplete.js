@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
-    setTimeout(function () { // Add a delay to ensure dynamic content loads
-        // Target the open text input for "Enter your address here" in QF5A
-        var inputElement = document.querySelector('input[name="ans160.0.0"][type="text"]');
+    setTimeout(function () { // Delay for dynamic content loading
+        // Select the input field based on the unique attributes
+        var inputElement = document.querySelector('input[name="oe174.0"][data-cell="QF5A_r1"]');
 
         if (inputElement) {
-            console.log('Found input element for QF5A:', inputElement);
-            inputElement.id = 'autocomplete-input'; // Assign a consistent ID
+            console.log('Found input element:', inputElement);
+            inputElement.id = 'autocomplete-input'; // Assign a consistent ID for the Places API
 
             // Load the Google Places API
             var script = document.createElement('script');
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             script.onload = function () {
                 var autocomplete = new google.maps.places.Autocomplete(inputElement, {
-                    types: ['geocode'], // Limit suggestions to addresses
+                    types: ['geocode'], // Restrict suggestions to addresses
                     componentRestrictions: { country: 'AU' }, // Restrict to Australia
                     strictBounds: true // Enable strict bounds
                 });
@@ -32,10 +32,10 @@ document.addEventListener('DOMContentLoaded', function () {
             };
 
             if (!document.querySelector('script[src*="maps.googleapis.com"]')) {
-                document.body.appendChild(script); // Append the Google Maps script dynamically
+                document.body.appendChild(script); // Append the Google Maps API script dynamically
             }
         } else {
-            console.error('Input element for QF5A not found.');
+            console.error('Input element for QF5A_r1 not found.');
         }
-    }, 1000); // Delay for dynamic survey platforms
+    }, 1000); // 1-second delay to handle dynamic rendering
 });
